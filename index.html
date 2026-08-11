@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบบันทึกการออมมาตรฐาน (Standard Saving Management System v15.0.0)</title>
+    <title>ระบบบันทึกการออมมาตรฐาน (Standard Saving Management System v17.0.0)</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -39,7 +39,7 @@
         }
     </script>
 
-    <!-- Font Awesome Icons -->
+    <!-- Font Awesome Icons (Strict NO EMOJIS Policy) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <!-- Google Fonts -->
@@ -57,14 +57,14 @@
         }
 
         .glass-panel {
-            background: rgba(255, 255, 255, 0.82);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(226, 232, 240, 0.9);
         }
 
         .dark .glass-panel {
-            background: rgba(18, 24, 36, 0.82);
+            background: rgba(18, 24, 36, 0.85);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(31, 42, 62, 0.9);
@@ -121,7 +121,7 @@
             transition: 0s;
         }
 
-        /* Rank Badges Metallic Gradients */
+        /* Rank Badges Metallic Gradients (Expanded 10 Tier System) */
         .rank-badge-bronze { background: linear-gradient(135deg, #a77044, #d7995b); color: #fff; }
         .rank-badge-silver { background: linear-gradient(135deg, #64748b, #94a3b8); color: #fff; }
         .rank-badge-gold { background: linear-gradient(135deg, #d97706, #f59e0b); color: #fff; }
@@ -130,6 +130,8 @@
         .rank-badge-master { background: linear-gradient(135deg, #8b5cf6, #d946ef); color: #fff; }
         .rank-badge-grandmaster { background: linear-gradient(135deg, #ef4444, #f97316); color: #fff; }
         .rank-badge-legendary { background: linear-gradient(135deg, #10b981, #06b6d4, #f59e0b); color: #fff; background-size: 200% 200%; animation: rankGlow 4s ease infinite; }
+        .rank-badge-mythic { background: linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6); color: #fff; background-size: 200% 200%; animation: rankGlow 3s ease infinite; }
+        .rank-badge-apex { background: linear-gradient(135deg, #f59e0b, #ef4444, #ec4899, #8b5cf6, #06b6d4); color: #fff; background-size: 300% 300%; animation: rankGlow 2.5s ease infinite; }
 
         @keyframes rankGlow {
             0% { background-position: 0% 50%; }
@@ -138,11 +140,11 @@
         }
 
         .pulse-dot {
-            animation: pulseDot 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+            animation: pulseDot 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
         @keyframes pulseDot {
-            0%, 100% { opacity: 1; }
-            50% { opacity: .3; }
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: .4; transform: scale(0.85); }
         }
     </style>
 </head>
@@ -179,15 +181,15 @@
                 </div>
                 <div>
                     <h1 class="font-bold text-base md:text-lg leading-tight tracking-tight text-slate-900 dark:text-white">ระบบบันทึกการออม</h1>
-                    <span class="text-[10px] text-slate-400 uppercase tracking-widest font-semibold block">Meta Standard v15.0.0</span>
+                    <span class="text-[10px] text-slate-400 uppercase tracking-widest font-semibold block">Meta Standard v17.0.0</span>
                 </div>
             </div>
         </div>
 
-        <!-- Controls Bar -->
+        <!-- Navigation Right Controls Bar -->
         <div class="flex items-center space-x-2 md:space-x-3">
             
-            <!-- Saving Rank Badge -->
+            <!-- Saving Rank Badge Header -->
             <div id="nav-rank-badge" class="hidden sm:flex items-center space-x-2 px-3.5 py-1.5 rounded-full text-xs font-bold shadow-sm transition-all duration-300">
                 <i id="nav-rank-icon" class="fa-solid fa-trophy"></i>
                 <span id="rank-name-text">...</span>
@@ -751,7 +753,7 @@
                         <div class="pt-4 space-y-2">
                             <div class="font-bold text-sm text-slate-900 dark:text-white" data-i18n="aboutSystem">เกี่ยวกับระบบ</div>
                             <div class="p-4 rounded-2xl bg-slate-100/60 dark:bg-slate-800/40 text-xs space-y-1 text-slate-500 dark:text-slate-400 border border-slate-200/60 dark:border-slate-700/60">
-                                <div><strong class="text-slate-700 dark:text-slate-300">เวอร์ชัน:</strong> Standard Saving System v15.0.0 (Data Safe Auto Migration)</div>
+                                <div><strong class="text-slate-700 dark:text-slate-300">เวอร์ชัน:</strong> Standard Saving System v17.0.0 (Zero Data Loss Migration Protection)</div>
                                 <div><strong class="text-slate-700 dark:text-slate-300">การรับรองความปลอดภัยข้อมูล:</strong> ระบบย้ายและคุ้มครองข้อมูลจากการอัปเดตอัตโนมัติ</div>
                                 <div><strong class="text-slate-700 dark:text-slate-300">ลิขสิทธิ์:</strong> © 2026 Meta Saving Architecture Group. All Rights Reserved.</div>
                             </div>
@@ -938,7 +940,7 @@
             autoRefreshTimer: null
         };
 
-        // Expanded Tier Ranks System Definition (8 Categories)
+        // Expanded 10 Tier Saving Ranks System Definition
         const RANKS = [
             { min: 0, max: 5000, nameTh: 'Bronze Saver', nameEn: 'Bronze Saver', class: 'rank-badge-bronze', icon: 'fa-medal' },
             { min: 5001, max: 20000, nameTh: 'Silver Saver', nameEn: 'Silver Saver', class: 'rank-badge-silver', icon: 'fa-award' },
@@ -947,7 +949,9 @@
             { min: 100001, max: 300000, nameTh: 'Diamond Saver', nameEn: 'Diamond Saver', class: 'rank-badge-diamond', icon: 'fa-gem' },
             { min: 300001, max: 700000, nameTh: 'Master Saver', nameEn: 'Master Saver', class: 'rank-badge-master', icon: 'fa-star' },
             { min: 700001, max: 1500000, nameTh: 'Grandmaster Saver', nameEn: 'Grandmaster Saver', class: 'rank-badge-grandmaster', icon: 'fa-trophy' },
-            { min: 1500001, max: Infinity, nameTh: 'Legendary Saver', nameEn: 'Legendary Saver', class: 'rank-badge-legendary', icon: 'fa-dragon' }
+            { min: 1500001, max: 3000000, nameTh: 'Legendary Saver', nameEn: 'Legendary Saver', class: 'rank-badge-legendary', icon: 'fa-dragon' },
+            { min: 3000001, max: 5000000, nameTh: 'Mythic Saver', nameEn: 'Mythic Saver', class: 'rank-badge-mythic', icon: 'fa-wand-magic-sparkles' },
+            { min: 5000001, max: Infinity, nameTh: 'Apex Divine Saver', nameEn: 'Apex Divine Saver', class: 'rank-badge-apex', icon: 'fa-bolt-lightning' }
         ];
 
         // i18n Translations Dictionary
@@ -1144,15 +1148,21 @@
             checkPendingCompletedGoalTimer();
         });
 
-        /* Guaranteeing Zero Data Loss Across Updates */
+        /* Zero Data Loss Migration Strategy Across System Versions */
         function loadAndMigrateStateFromStorage() {
             try {
-                // Try reading current version storage key first
-                let rawData = localStorage.getItem('meta_saving_system_v15');
-                
-                // Fallback to previous schema keys (v12, etc.) to guarantee NO DATA LOSS
-                if (!rawData) {
-                    rawData = localStorage.getItem('meta_saving_system_v12') || localStorage.getItem('meta_saving_system');
+                // Key search order from current v17 back to legacy keys
+                const storageKeys = [
+                    'meta_saving_system_v17',
+                    'meta_saving_system_v15',
+                    'meta_saving_system_v12',
+                    'meta_saving_system'
+                ];
+
+                let rawData = null;
+                for (const key of storageKeys) {
+                    rawData = localStorage.getItem(key);
+                    if (rawData) break;
                 }
 
                 if (rawData) {
@@ -1163,7 +1173,6 @@
                     if (Array.isArray(parsed.notifications)) STATE.notifications = parsed.notifications;
                     if (parsed.settings) STATE.settings = { ...STATE.settings, ...parsed.settings };
 
-                    // Save immediately to the current version key
                     saveStateToStorage();
                 }
             } catch (err) {
@@ -1180,9 +1189,10 @@
                     notifications: STATE.notifications,
                     settings: STATE.settings
                 });
-                // Write to both latest key and fallback key for dual protection
+                
+                // Write to latest v17 key and fallback v15 key for safety
+                localStorage.setItem('meta_saving_system_v17', dataString);
                 localStorage.setItem('meta_saving_system_v15', dataString);
-                localStorage.setItem('meta_saving_system_v12', dataString);
             } catch (err) {
                 console.error('Data save error:', err);
             }
@@ -1267,7 +1277,7 @@
                 executeManualRefresh();
             });
 
-            // Toggle Auto-Refresh Button
+            // Toggle Auto-Refresh Button in Navbar
             document.getElementById('btn-toggle-autorefresh').addEventListener('click', () => {
                 STATE.settings.autoRefreshEnabled = !STATE.settings.autoRefreshEnabled;
                 saveStateToStorage();
@@ -1329,7 +1339,6 @@
                 indicator.className = 'w-2 h-2 rounded-full bg-emerald-500 pulse-dot';
                 statusText.textContent = 'Auto Sync On';
                 
-                // Interval refresh loop (every 10 seconds)
                 STATE.autoRefreshTimer = setInterval(() => {
                     loadAndMigrateStateFromStorage();
                     renderAllViews();
@@ -1880,7 +1889,7 @@
                     renderAllViews();
                     showToast(`ย้ายเป้าหมาย "${completed.name}" เข้าสู่ประวัติเรียบร้อย`, 'info');
                 }
-            }, 60000); // 1 Minute Timer
+            }, 60000); // 1 Minute Timer Requirement
         }
 
         function checkPendingCompletedGoalTimer() {
