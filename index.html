@@ -303,6 +303,11 @@
                         <span data-i18n="calendar">ปฏิทินการออม</span>
                     </button>
 
+                    <button onclick="switchTab('ai-advisor')" id="nav-ai-advisor" class="nav-item w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl font-medium text-sm transition text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/60">
+                        <i class="fa-solid fa-robot w-5 text-center text-brand-500"></i>
+                        <span data-i18n="aiAdvisor">AI ที่ปรึกษาการออม</span>
+                    </button>
+
                     <button onclick="switchTab('notifications')" id="nav-notifications" class="nav-item w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl font-medium text-sm transition text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/60">
                         <i class="fa-solid fa-bell w-5 text-center"></i>
                         <span data-i18n="notifications">การแจ้งเตือน</span>
@@ -715,6 +720,102 @@
                 </div>
             </section>
 
+            <!-- VIEW 8: AI FINANCIAL ADVISOR (NO TYPING CHAT) -->
+            <section id="view-ai-advisor" class="tab-content hidden space-y-6">
+                <div class="glass-panel p-6 rounded-3xl border border-slate-200 dark:border-slate-800 soft-shadow space-y-6">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 bg-gradient-to-tr from-brand-600 to-brand-400 rounded-2xl flex items-center justify-center text-white text-xl shadow-lg shadow-brand-500/20">
+                                <i class="fa-solid fa-robot"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-xl font-bold text-slate-900 dark:text-white" data-i18n="aiAdvisorTitle">AI ที่ปรึกษาการออมอัจฉริยะ</h2>
+                                <p class="text-xs text-slate-500 dark:text-slate-400" data-i18n="aiAdvisorSub">วิเคราะห์พฤติกรรมการออมรายบุคคล ไม่ต้องพิมพ์ เพียงเลือกหัวข้อที่สนใจ</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2 bg-slate-100/80 dark:bg-slate-800/60 p-2 rounded-2xl text-xs">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 pulse-dot"></span>
+                            <span class="font-bold text-slate-700 dark:text-slate-300" id="ai-context-rank-badge">กำลังโหลดข้อมูล...</span>
+                        </div>
+                    </div>
+
+                    <!-- Quick Context Summary Pills -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                        <div class="p-3 rounded-2xl bg-slate-100/70 dark:bg-slate-800/40 border border-slate-200/60 dark:border-slate-700/60 text-center">
+                            <span class="text-[10px] text-slate-400 font-bold block uppercase">ยอดออมปัจจุบัน</span>
+                            <span class="text-xs font-black text-slate-900 dark:text-white" id="ai-card-total">฿0.00</span>
+                        </div>
+                        <div class="p-3 rounded-2xl bg-slate-100/70 dark:bg-slate-800/40 border border-slate-200/60 dark:border-slate-700/60 text-center">
+                            <span class="text-[10px] text-slate-400 font-bold block uppercase">ระดับการออม</span>
+                            <span class="text-xs font-black text-brand-600 dark:text-brand-400" id="ai-card-rank">-</span>
+                        </div>
+                        <div class="p-3 rounded-2xl bg-slate-100/70 dark:bg-slate-800/40 border border-slate-200/60 dark:border-slate-700/60 text-center">
+                            <span class="text-[10px] text-slate-400 font-bold block uppercase">เป้าหมายกำลังดำเนิน</span>
+                            <span class="text-xs font-black text-slate-900 dark:text-white" id="ai-card-goals">0 รายการ</span>
+                        </div>
+                        <div class="p-3 rounded-2xl bg-slate-100/70 dark:bg-slate-800/40 border border-slate-200/60 dark:border-slate-700/60 text-center">
+                            <span class="text-[10px] text-slate-400 font-bold block uppercase">ออมเฉลี่ยเดือนนี้</span>
+                            <span class="text-xs font-black text-emerald-600 dark:text-emerald-400" id="ai-card-avg">฿0.00</span>
+                        </div>
+                    </div>
+
+                    <!-- Button Action Chips Bar (No Typing Prompt Selectors) -->
+                    <div>
+                        <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-2" data-i18n="aiSelectTopic">เลือกคำถามวิเคราะห์อัตโนมัติ (คลิกเพื่อเริ่มวิเคราะห์):</span>
+                        <div class="flex flex-wrap gap-2" id="ai-quick-action-chips">
+                            <button onclick="sendAIQuery('overview')" class="px-3.5 py-2 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-brand-600 hover:text-white text-slate-700 dark:text-slate-300 text-xs font-bold transition flex items-center space-x-1.5 shadow-sm border border-slate-200 dark:border-slate-700">
+                                <i class="fa-solid fa-chart-pie text-brand-500"></i>
+                                <span>วิเคราะห์ภาพรวมการออม</span>
+                            </button>
+                            <button onclick="sendAIQuery('rank_plan')" class="px-3.5 py-2 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-brand-600 hover:text-white text-slate-700 dark:text-slate-300 text-xs font-bold transition flex items-center space-x-1.5 shadow-sm border border-slate-200 dark:border-slate-700">
+                                <i class="fa-solid fa-trophy text-amber-500"></i>
+                                <span>แผนเลื่อนระดับ Rank ขั้นถัดไป</span>
+                            </button>
+                            <button onclick="sendAIQuery('goals_eval')" class="px-3.5 py-2 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-brand-600 hover:text-white text-slate-700 dark:text-slate-300 text-xs font-bold transition flex items-center space-x-1.5 shadow-sm border border-slate-200 dark:border-slate-700">
+                                <i class="fa-solid fa-bullseye text-red-500"></i>
+                                <span>วิเคราะห์เป้าหมายที่กำลังสะสม</span>
+                            </button>
+                            <button onclick="sendAIQuery('emergency_eval')" class="px-3.5 py-2 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-brand-600 hover:text-white text-slate-700 dark:text-slate-300 text-xs font-bold transition flex items-center space-x-1.5 shadow-sm border border-slate-200 dark:border-slate-700">
+                                <i class="fa-solid fa-shield-heart text-purple-500"></i>
+                                <span>ประเมินเงินสำรองฉุกเฉิน</span>
+                            </button>
+                            <button onclick="sendAIQuery('growth_tips')" class="px-3.5 py-2 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-brand-600 hover:text-white text-slate-700 dark:text-slate-300 text-xs font-bold transition flex items-center space-x-1.5 shadow-sm border border-slate-200 dark:border-slate-700">
+                                <i class="fa-solid fa-arrow-trend-up text-emerald-500"></i>
+                                <span>เทคนิคเพิ่มยอดออมอีก 20%</span>
+                            </button>
+                            <button onclick="sendAIQuery('monthly_summary')" class="px-3.5 py-2 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-brand-600 hover:text-white text-slate-700 dark:text-slate-300 text-xs font-bold transition flex items-center space-x-1.5 shadow-sm border border-slate-200 dark:border-slate-700">
+                                <i class="fa-solid fa-calendar-check text-cyan-500"></i>
+                                <span>สรุปพฤติกรรมการออมเดือนนี้</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Chat Message Area Stream -->
+                    <div class="p-4 rounded-3xl bg-slate-50/70 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 min-h-[360px] max-h-[500px] overflow-y-auto space-y-4" id="ai-chat-stream">
+                        <!-- Initial Welcome Message from AI -->
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 rounded-xl bg-brand-600 text-white flex items-center justify-center text-xs font-bold shadow-md shrink-0">
+                                <i class="fa-solid fa-robot"></i>
+                            </div>
+                            <div class="bg-white dark:bg-meta-cardDark p-4 rounded-2xl border border-slate-200 dark:border-slate-800 soft-shadow max-w-xl text-xs space-y-2">
+                                <div class="font-bold text-slate-900 dark:text-white flex items-center space-x-1">
+                                    <span>ที่ปรึกษาการออม AI</span>
+                                    <span class="text-[10px] px-2 py-0.2 rounded-full bg-brand-500/10 text-brand-600 font-semibold">Gemini 3 Flash</span>
+                                </div>
+                                <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                                    สวัสดีครับ! ผมคือ AI ที่ปรึกษาการออมอัจฉริยะของคุณ คุณไม่จำเป็นต้องพิมพ์คำถามเอง เพียงคลิกเลือกหัวข้อที่ต้องการวิเคราะห์ด้านบน หรือเลือกตัวเลือกถัดไปหลังจากได้รับคำตอบ ระบบจะวิเคราะห์ข้อมูลการออมจริงของคุณโดยอัตโนมัติครับ
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Follow-Up Dynamic Option Chips Container -->
+                    <div id="ai-followup-chips" class="flex flex-wrap gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+                        <!-- Dynamic choices generated after AI reply -->
+                    </div>
+                </div>
+            </section>
+
             <section id="view-notifications" class="tab-content hidden max-w-3xl mx-auto space-y-6">
                 <div class="glass-panel p-6 rounded-3xl border border-slate-200 dark:border-slate-800 soft-shadow">
                     <div class="flex items-center justify-between mb-6">
@@ -1024,6 +1125,10 @@
                 goalHistory: "ประวัติเป้าหมาย",
                 analytics: "วิเคราะห์ข้อมูล",
                 calendar: "ปฏิทินการออม",
+                aiAdvisor: "AI ที่ปรึกษาการออม",
+                aiAdvisorTitle: "AI ที่ปรึกษาการออมอัจฉริยะ",
+                aiAdvisorSub: "วิเคราะห์พฤติกรรมการออมรายบุคคล ไม่ต้องพิมพ์ เพียงเลือกหัวข้อที่สนใจ",
+                aiSelectTopic: "เลือกคำถามวิเคราะห์อัตโนมัติ (คลิกเพื่อเริ่มวิเคราะห์):",
                 notifications: "การแจ้งเตือน",
                 settings: "ตั้งค่า",
                 totalSavings: "ยอดออมทั้งหมด",
@@ -1061,6 +1166,10 @@
                 goalHistory: "Goal History",
                 analytics: "Analytics",
                 calendar: "Calendar",
+                aiAdvisor: "AI Saving Advisor",
+                aiAdvisorTitle: "Smart AI Saving Advisor",
+                aiAdvisorSub: "Personalized saving behavior analysis without typing. Just tap your choice.",
+                aiSelectTopic: "Select Automated Analysis Topic:",
                 notifications: "Notifications",
                 settings: "Settings",
                 totalSavings: "Total Savings",
@@ -1494,8 +1603,230 @@
             renderGoalHistoryList();
             renderAnalytics();
             renderCalendar();
+            renderAIAdvisorContext();
             renderNotifications();
             updateMaintenanceUI();
+        }
+        /* --- AI ADVISOR BUTTON-DRIVEN (NO-TYPING) ENGINE --- */
+
+        function renderAIAdvisorContext() {
+            const total = calculateTotalSavings();
+            const rank = getSavingRank(total);
+            const activeGoals = STATE.goals.filter(g => g.status !== 'completed');
+            
+            const now = new Date();
+            const curMonthSavings = STATE.savings.filter(s => {
+                const d = new Date(s.date);
+                return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+            }).reduce((a, b) => a + parseFloat(b.amount || 0), 0);
+
+            const elBadge = document.getElementById('ai-context-rank-badge');
+            if (elBadge) elBadge.textContent = `ระดับ: ${rank.nameTh} (${formatCurrency(total)})`;
+
+            const cardTotal = document.getElementById('ai-card-total');
+            if (cardTotal) cardTotal.textContent = formatCurrency(total);
+
+            const cardRank = document.getElementById('ai-card-rank');
+            if (cardRank) cardRank.textContent = rank.nameTh;
+
+            const cardGoals = document.getElementById('ai-card-goals');
+            if (cardGoals) cardGoals.textContent = `${activeGoals.length} เป้าหมาย`;
+
+            const cardAvg = document.getElementById('ai-card-avg');
+            if (cardAvg) cardAvg.textContent = formatCurrency(curMonthSavings);
+        }
+
+        const AI_PROMPT_TITLES = {
+            overview: "วิเคราะห์ภาพรวมการออมของฉัน",
+            rank_plan: "แนะนำแผนการเลื่อนระดับ Rank ขั้นถัดไป",
+            goals_eval: "ประเมินความคืบหน้าเป้าหมายการออม",
+            emergency_eval: "ประเมินสัดส่วนเงินสำรองฉุกเฉิน",
+            growth_tips: "ขอเทคนิคเพิ่มยอดออมอีก 20%",
+            monthly_summary: "สรุปพฤติกรรมการออมในเดือนนี้",
+            budget_alloc: "การจัดสรรเงินออมแบบ 50/30/20",
+            risk_manage: "วิเคราะห์ความเสี่ยงและจุดโหว่ในการออม"
+        };
+
+        async function sendAIQuery(topicKey, customTitle = null) {
+            const stream = document.getElementById('ai-chat-stream');
+            if (!stream) return;
+
+            const userTitle = customTitle || AI_PROMPT_TITLES[topicKey] || topicKey;
+
+            // 1. Append User Message Bubble
+            const userBubble = document.createElement('div');
+            userBubble.className = "flex items-start justify-end space-x-3";
+            userBubble.innerHTML = `
+                <div class="bg-brand-600 text-white p-3.5 rounded-2xl max-w-lg text-xs font-bold shadow-md">
+                    <i class="fa-solid fa-circle-dot mr-1 text-[10px]"></i> ${escapeHtml(userTitle)}
+                </div>
+            `;
+            stream.appendChild(userBubble);
+            stream.scrollTop = stream.scrollHeight;
+
+            // 2. Append Loading Skeleton Bubble
+            const loadingBubble = document.createElement('div');
+            loadingBubble.id = 'ai-loading-bubble';
+            loadingBubble.className = "flex items-start space-x-3";
+            loadingBubble.innerHTML = `
+                <div class="w-8 h-8 rounded-xl bg-brand-600 text-white flex items-center justify-center text-xs font-bold shadow-md shrink-0">
+                    <i class="fa-solid fa-robot fa-spin"></i>
+                </div>
+                <div class="bg-white dark:bg-meta-cardDark p-4 rounded-2xl border border-slate-200 dark:border-slate-800 soft-shadow text-xs space-y-2 text-slate-400 font-semibold animate-pulse">
+                    กำลังประมวลผลข้อมูลการออมของคุณด้วย AI...
+                </div>
+            `;
+            stream.appendChild(loadingBubble);
+            stream.scrollTop = stream.scrollHeight;
+
+            // Disable prompt chips while loading
+            const chips = document.getElementById('ai-quick-action-chips');
+            if (chips) chips.classList.add('opacity-50', 'pointer-events-none');
+
+            // 3. Prepare Prompt Context Data
+            const totalSavings = calculateTotalSavings();
+            const currentRank = getSavingRank(totalSavings);
+            const nextRank = RANKS[currentRank.index + 1];
+            const activeGoals = STATE.goals.filter(g => g.status !== 'completed');
+
+            const now = new Date();
+            const curMonthSavings = STATE.savings.filter(s => {
+                const d = new Date(s.date);
+                return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+            }).reduce((a, b) => a + parseFloat(b.amount || 0), 0);
+
+            const categoryBreakdown = {};
+            STATE.savings.forEach(s => {
+                categoryBreakdown[s.category] = (categoryBreakdown[s.category] || 0) + parseFloat(s.amount);
+            });
+
+            const systemInstruction = `คุณเป็น AI ที่ปรึกษาการออมเงินประจำแอป "Standard Saving Management System".
+จงตอบกลับด้วยภาษาไทยอย่างเป็นกันเอง สุภาพ กระชับ อ่านง่าย เหมาะกับการแสดงผลในมือถือ (ความยาวประมาณ 2-4 ย่อหน้า) 
+มีหัวข้อชัดเจน ให้คำแนะนำที่เป็นรูปธรรม อ้างอิงตามข้อมูลจริงของผู้ใช้ดังนี้:
+- ยอดออมสะสมรวม: ${totalSavings} บาท
+- ยศการออมปัจจุบัน: ${currentRank.nameTh} (Tier ${currentRank.index + 1})
+- ยศถัดไป: ${nextRank ? nextRank.nameTh + ' (ขาดอีก ' + (nextRank.min - totalSavings) + ' บาท)' : 'ระดับสูงสุดแล้ว'}
+- ยอดออมเดือนนี้: ${curMonthSavings} บาท
+- เป้าหมายที่กำลังสะสม: ${activeGoals.length} เป้าหมาย (${activeGoals.map(g => g.name + ' ' + g.currentAmount + '/' + g.targetAmount).join(', ') || 'ไม่มี'})
+- แยกตามหมวดหมู่: ${JSON.stringify(categoryBreakdown)}`;
+
+            const userPrompt = `โปรดวิเคราะห์หัวข้อ: "${userTitle}" พร้อมให้ข้อเสนอแนะ 3 ข้อสั้นๆ ที่ปฏิบัติตามได้จริง`;
+
+            try {
+                const apiKey = ""; // Canvas runtime injection key
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+                const payload = {
+                    contents: [{ parts: [{ text: userPrompt }] }],
+                    systemInstruction: { parts: [{ text: systemInstruction }] }
+                };
+
+                const res = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await res.json();
+                const aiResponseText = data?.candidates?.[0]?.content?.parts?.[0]?.text || generateFallbackAdvice(topicKey, totalSavings, currentRank, nextRank);
+
+                renderAIResponseBubble(aiResponseText, topicKey);
+            } catch (err) {
+                console.error("AI API Fetch Error:", err);
+                const fallbackText = generateFallbackAdvice(topicKey, totalSavings, currentRank, nextRank);
+                renderAIResponseBubble(fallbackText, topicKey);
+            } finally {
+                const loader = document.getElementById('ai-loading-bubble');
+                if (loader) loader.remove();
+                if (chips) chips.classList.remove('opacity-50', 'pointer-events-none');
+            }
+        }
+
+        function generateFallbackAdvice(topicKey, totalSavings, currentRank, nextRank) {
+            const needed = nextRank ? (nextRank.min - totalSavings) : 0;
+            
+            if (topicKey === 'overview') {
+                return `📊 **สรุปภาพรวมการออมของคุณ**\n\n` +
+                    `ขณะนี้คุณมียอดออมสะสมรวม **${formatCurrency(totalSavings)}** อยู่ในระดับ **${currentRank.nameTh}**!\n\n` +
+                    `• **จุดแข็ง:** มีวินัยในการบันทึกรายการออมอย่างต่อเนื่อง\n` +
+                    `• **คำแนะนำ:** พยายามกระจายการออมไปยังหมวดหมู่เงินสำรองฉุกเฉินและการลงทุนเพื่อผลตอบแทนที่ดีขึ้น`;
+            } else if (topicKey === 'rank_plan') {
+                return `🏆 **แนวทางเลื่อนระดับเป็น ${nextRank ? nextRank.nameTh : 'Celestial Sovereign'}**\n\n` +
+                    `คุณต้องการอีกเพียง **${formatCurrency(needed)}** เพื่อปรับยศขึ้นสู่อีกขั้น!\n\n` +
+                    `1. **ตั้งเป้าหมายรายวัน:** ออมเพิ่มวันละ ฿100 จะเลื่อนระดับได้ภายใน ${Math.ceil(needed / 100)} วัน\n` +
+                    `2. **ออมทันทีเมื่อมีรายได้:** หักเงินออม 10% ทันทีที่เงินเดือนหรือรายได้เข้ามา`;
+            } else if (topicKey === 'goals_eval') {
+                return `🎯 **วิเคราะห์เป้าหมายการออม**\n\n` +
+                    `คุณมีเป้าหมายที่กำลังดำเนินการอยู่ **${STATE.goals.filter(g => g.status !== 'completed').length} รายการ**\n\n` +
+                    `• **คำแนะนำ:** ควรมุ่งเน้นเป้าหมายที่มีระยะเวลาสิ้นสุดใกล้ที่สุดก่อนเพื่อสร้างแรงจูงใจและความสำเร็จต่อเนื่อง!`;
+            } else {
+                return `💡 **ข้อเสนอแนะทางการออม**\n\n` +
+                    `การออมอย่างสม่ำเสมอเป็นหัวใจสำคัญของการสร้างความมั่นคงทางการเงินในระยะยาว มียอดออมรวม **${formatCurrency(totalSavings)}** แล้ว ขอให้รักษามาตรฐานและตั้งเป้าหมายถัดไปครับ!`;
+            }
+        }
+
+        function renderAIResponseBubble(responseText, topicKey) {
+            const stream = document.getElementById('ai-chat-stream');
+            if (!stream) return;
+
+            // Formatted Paragraphs Response
+            const formatted = responseText.replace(/\n/g, '<br>');
+
+            const aiBubble = document.createElement('div');
+            aiBubble.className = "flex items-start space-x-3";
+            aiBubble.innerHTML = `
+                <div class="w-8 h-8 rounded-xl bg-brand-600 text-white flex items-center justify-center text-xs font-bold shadow-md shrink-0">
+                    <i class="fa-solid fa-robot"></i>
+                </div>
+                <div class="bg-white dark:bg-meta-cardDark p-4 rounded-2xl border border-slate-200 dark:border-slate-800 soft-shadow max-w-xl text-xs space-y-2">
+                    <div class="font-bold text-slate-900 dark:text-white flex items-center space-x-1">
+                        <span>ที่ปรึกษาการออม AI</span>
+                        <span class="text-[10px] px-2 py-0.2 rounded-full bg-emerald-500/10 text-emerald-600 font-semibold">วิเคราะห์เรียบร้อย</span>
+                    </div>
+                    <div class="text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
+                        ${formatted}
+                    </div>
+                </div>
+            `;
+            stream.appendChild(aiBubble);
+            stream.scrollTop = stream.scrollHeight;
+
+            // Render Follow-Up Choice Buttons (No Typing continuous conversation)
+            renderFollowUpChoices(topicKey);
+        }
+
+        function renderFollowUpChoices(topicKey) {
+            const container = document.getElementById('ai-followup-chips');
+            if (!container) return;
+
+            let choices = [];
+            if (topicKey === 'overview') {
+                choices = [
+                    { title: 'วิเคราะห์เป้าหมายต่อ', key: 'goals_eval' },
+                    { title: 'ขอแนวทางเลื่อน Rank', key: 'rank_plan' },
+                    { title: 'จัดสรรเงินออม 50/30/20', key: 'budget_alloc' }
+                ];
+            } else if (topicKey === 'rank_plan') {
+                choices = [
+                    { title: 'เทคนิคเพิ่มยอดออม 20%', key: 'growth_tips' },
+                    { title: 'วิเคราะห์ความเสี่ยงการออม', key: 'risk_manage' }
+                ];
+            } else {
+                choices = [
+                    { title: 'ขอสรุปพฤติกรรมเดือนนี้', key: 'monthly_summary' },
+                    { title: 'วิเคราะห์ภาพรวมใหม่', key: 'overview' }
+                ];
+            }
+
+            container.innerHTML = `
+                <span class="text-[10px] font-bold text-slate-400 w-full block mb-1">คำถามถัดไปที่แนะนำ (คลิกเพื่อถามต่อทันที):</span>
+                ${choices.map(c => `
+                    <button onclick="sendAIQuery('${c.key}', '${c.title}')" class="px-3 py-1.5 rounded-xl bg-brand-500/10 hover:bg-brand-600 text-brand-700 dark:text-brand-300 hover:text-white text-[11px] font-bold transition flex items-center space-x-1 border border-brand-500/20">
+                        <i class="fa-solid fa-angle-right text-[10px]"></i>
+                        <span>${c.title}</span>
+                    </button>
+                `).join('')}
+            `;
         }
 
         function renderRankBadge() {
@@ -1504,12 +1835,11 @@
             const isEn = STATE.settings.lang === 'en';
             const name = isEn ? rank.nameEn : rank.nameTh;
 
-            // Header Nav Badge
-            const navBadge = document.getElementById('nav-rank-badge');
-            if (navBadge) {
-                navBadge.className = `hidden sm:flex items-center space-x-2 px-3.5 py-1.5 rounded-full text-xs font-bold shadow-sm transition-all duration-300 cursor-pointer hover:opacity-90 ${rank.class}`;
+            const navRankBadge = document.getElementById('nav-rank-badge');
+            if (navRankBadge) {
+                navRankBadge.className = `hidden sm:flex items-center space-x-2 px-3.5 py-1.5 rounded-full text-xs font-bold shadow-sm transition-all duration-300 cursor-pointer hover:opacity-90 ${rank.class}`;
             }
-            
+
             const navRankIcon = document.getElementById('nav-rank-icon');
             if (navRankIcon) navRankIcon.className = `fa-solid ${rank.icon}`;
             
