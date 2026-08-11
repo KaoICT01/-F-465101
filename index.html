@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบบันทึกการออมมาตรฐาน (Standard Saving Management System v23.0.0)</title>
+    <title>ระบบบันทึกการออมมาตรฐาน (Standard Saving Management System v25.0.0)</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -173,16 +173,28 @@
         </div>
     </div>
 
-    <div class="bg-slate-900 text-white text-xs py-1.5 px-4 lg:px-8 border-b border-slate-800 flex items-center justify-between shadow-sm">
+    <div class="bg-slate-900 text-white text-xs py-1.5 px-4 lg:px-8 border-b border-slate-800 flex flex-wrap items-center justify-between gap-2 shadow-sm">
         <div class="flex items-center space-x-2">
             <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span class="font-semibold text-slate-300">ระบบบันทึกการออมมาตรฐาน (Standard Saving Management System v23.0.0)</span>
+            <span class="font-semibold text-slate-300">ระบบบันทึกการออมมาตรฐาน (Standard Saving Management System v25.0.0)</span>
+            <!-- Maintenance Window Badge -->
+            <span id="maintenance-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 hidden animate-pulse">
+                <i class="fa-solid fa-wrench mr-1"></i>ช่วงปิดปรับปรุงระบบ (23:30 - 00:00)
+            </span>
         </div>
         <div class="flex items-center space-x-2 text-slate-200 bg-slate-800/80 px-3 py-0.5 rounded-full border border-slate-700/60 text-[11px]">
             <i class="fa-regular fa-clock text-brand-400"></i>
             <span id="top-live-date" class="font-medium">...</span>
             <span class="text-slate-500">|</span>
             <span id="top-live-time" class="font-bold font-mono-clock text-brand-300">...</span>
+        </div>
+    </div>
+
+    <!-- Global Scheduled Maintenance Banner Alert -->
+    <div id="maintenance-global-banner" class="bg-amber-500/15 dark:bg-amber-500/10 border-b border-amber-500/30 text-amber-800 dark:text-amber-200 px-4 py-2 text-xs font-semibold flex items-center justify-between hidden">
+        <div class="flex items-center space-x-2 max-w-4xl mx-auto w-full justify-center">
+            <i class="fa-solid fa-triangle-exclamation text-amber-500 text-sm"></i>
+            <span>ระบบกำลังอยู่ระหว่างการปิดปรับปรุงเพื่อเพิ่มประสิทธิภาพการทำงาน (ช่วงเวลา 23:30 น. - 00:00 น.) ระบบจะไม่สามารถเพิ่ม แก้ไข หรือลบข้อมูลได้ชั่วคราว</span>
         </div>
     </div>
 
@@ -199,7 +211,7 @@
                     <div class="flex items-center space-x-2">
                         <h1 class="font-bold text-base md:text-lg leading-tight tracking-tight text-slate-900 dark:text-white">ระบบบันทึกการออม</h1>
                     </div>
-                    <span class="text-[10px] text-slate-400 uppercase tracking-widest font-semibold block">Meta Standard v23.0.0</span>
+                    <span class="text-[10px] text-slate-400 uppercase tracking-widest font-semibold block">Meta Standard v25.0.0</span>
                 </div>
             </div>
         </div>
@@ -480,6 +492,12 @@
                     <div class="mb-6">
                         <h2 class="text-xl font-bold text-slate-900 dark:text-white" data-i18n="addSavingTitle">บันทึกการออมใหม่</h2>
                         <p class="text-xs text-slate-500 dark:text-slate-400" data-i18n="addSavingSub">กรอกข้อมูลการออมเงินเพื่อเพิ่มเข้าสู่ยอดออมหลักทันที</p>
+                    </div>
+
+                    <!-- Scheduled Maintenance Form Notice -->
+                    <div id="add-saving-maint-notice" class="p-3.5 mb-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-700 dark:text-amber-300 text-xs hidden flex items-center space-x-2">
+                        <i class="fa-solid fa-clock text-base"></i>
+                        <span>ขณะนี้อยู่ในช่วงเวลาปิดปรับปรุงระบบเพิ่มประสิทธิภาพ (23:30 น. - 00:00 น.) ไม่สามารถบันทึกข้อมูลได้</span>
                     </div>
 
                     <form id="form-add-saving" class="space-y-4" onsubmit="handleAddSaving(event)">
@@ -805,7 +823,8 @@
                         <div class="pt-4 space-y-2">
                             <div class="font-bold text-sm text-slate-900 dark:text-white" data-i18n="aboutSystem">เกี่ยวกับระบบ</div>
                             <div class="p-4 rounded-2xl bg-slate-100/60 dark:bg-slate-800/40 text-xs space-y-1 text-slate-500 dark:text-slate-400 border border-slate-200/60 dark:border-slate-700/60">
-                                <div><strong class="text-slate-700 dark:text-slate-300">เวอร์ชัน:</strong> Standard Saving System v23.0.0 (Saving Ranks Page & Top Clock Banner)</div>
+                                <div><strong class="text-slate-700 dark:text-slate-300">เวอร์ชัน:</strong> Standard Saving System v25.0.0 (Scheduled Performance Optimization Maintenance Engine)</div>
+                                <div><strong class="text-slate-700 dark:text-slate-300">ช่วงเวลาปิดปรับปรุงระบบ:</strong> 23:30 น. - 00:00 น. เพื่อเพิ่มประสิทธิภาพการทำงาน</div>
                                 <div><strong class="text-slate-700 dark:text-slate-300">การรับรองความปลอดภัยข้อมูล:</strong> ระบบย้ายและคุ้มครองข้อมูลอัตโนมัติ (Zero Data Loss Protection)</div>
                                 <div><strong class="text-slate-700 dark:text-slate-300">ลิขสิทธิ์:</strong> © 2026 Meta Saving Architecture Group. All Rights Reserved.</div>
                             </div>
@@ -964,7 +983,7 @@
     <div id="toast-container" class="fixed bottom-5 right-5 z-50 space-y-2 pointer-events-none"></div>
 
     <script>
-        /* Modern Vanilla JS Core Engine v23.0.0 */
+        /* Modern Vanilla JS Core Engine v25.0.0 */
 
         // System Application State
         const STATE = {
@@ -1071,7 +1090,7 @@
             }
         };
 
-        // Expanded 12 Tier Saving Ranks System Definition (v23.0.0)
+        // Expanded 12 Tier Saving Ranks System Definition (v25.0.0)
         const RANKS = [
             { min: 0, max: 2000, nameTh: 'Iron Saver', nameEn: 'Iron Saver', class: 'rank-badge-iron', icon: 'fa-shield' },
             { min: 2001, max: 8000, nameTh: 'Bronze Saver', nameEn: 'Bronze Saver', class: 'rank-badge-bronze', icon: 'fa-medal' },
@@ -1087,9 +1106,55 @@
             { min: 10000001, max: Infinity, nameTh: 'Celestial Sovereign Saver', nameEn: 'Celestial Sovereign Saver', class: 'rank-badge-celestial', icon: 'fa-sun' }
         ];
 
+        /**
+         * Checks if the system is currently in the scheduled maintenance window (23:30 - 00:00).
+         */
+        function isMaintenanceWindow() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            return hours === 23 && minutes >= 30;
+        }
+
+        /**
+         * Updates UI banners and form controls according to maintenance mode status.
+         */
+        function updateMaintenanceUI() {
+            const inMaint = isMaintenanceWindow();
+
+            const badge = document.getElementById('maintenance-badge');
+            if (badge) {
+                if (inMaint) badge.classList.remove('hidden');
+                else badge.classList.add('hidden');
+            }
+
+            const globalBanner = document.getElementById('maintenance-global-banner');
+            if (globalBanner) {
+                if (inMaint) globalBanner.classList.remove('hidden');
+                else globalBanner.classList.add('hidden');
+            }
+
+            const notice = document.getElementById('add-saving-maint-notice');
+            if (notice) {
+                if (inMaint) notice.classList.remove('hidden');
+                else notice.classList.add('hidden');
+            }
+
+            const saveBtn = document.getElementById('btn-save-saving');
+            if (saveBtn) {
+                saveBtn.disabled = inMaint;
+                if (inMaint) {
+                    saveBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                } else {
+                    saveBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+            }
+        }
+
         function loadAndMigrateStateFromStorage() {
             try {
                 const storageKeys = [
+                    'meta_saving_system_v25',
                     'meta_saving_system_v23',
                     'meta_saving_system_v21',
                     'meta_saving_system_v19',
@@ -1130,8 +1195,8 @@
                     settings: STATE.settings
                 });
                 
+                localStorage.setItem('meta_saving_system_v25', dataString);
                 localStorage.setItem('meta_saving_system_v23', dataString);
-                localStorage.setItem('meta_saving_system_v21', dataString);
             } catch (err) {
                 console.error('Data save error:', err);
             }
@@ -1153,6 +1218,8 @@
                 
                 if (topDateEl) topDateEl.textContent = formattedDate;
                 if (topTimeEl) topTimeEl.textContent = formattedTime;
+
+                updateMaintenanceUI();
             };
 
             updateClock();
@@ -1428,6 +1495,7 @@
             renderAnalytics();
             renderCalendar();
             renderNotifications();
+            updateMaintenanceUI();
         }
 
         function renderRankBadge() {
@@ -1693,6 +1761,14 @@
 
         function handleAddSaving(e) {
             e.preventDefault();
+
+            // Scheduled Maintenance Window Restriction Check
+            if (isMaintenanceWindow()) {
+                playTone('error');
+                showToast('ขณะนี้อยู่ในช่วงเวลาปิดปรับปรุงเพื่อเพิ่มประสิทธิภาพระบบ (23:30 น. - 00:00 น.) ไม่สามารถบันทึกข้อมูลได้', 'error');
+                return;
+            }
+
             const dateInput = document.getElementById('saving-date');
             const amountInput = document.getElementById('saving-amount');
             const catInput = document.getElementById('saving-category');
@@ -1740,6 +1816,12 @@
         }
 
         function openEditModal(id) {
+            if (isMaintenanceWindow()) {
+                playTone('error');
+                showToast('ขณะนี้อยู่ในช่วงเวลาปิดปรับปรุงเพื่อเพิ่มประสิทธิภาพระบบ (23:30 น. - 00:00 น.) ไม่สามารถแก้ไขข้อมูลได้', 'error');
+                return;
+            }
+
             const item = STATE.savings.find(s => s.id === id);
             if (!item) return;
 
@@ -1772,6 +1854,13 @@
 
         function handleUpdateSaving(e) {
             e.preventDefault();
+
+            if (isMaintenanceWindow()) {
+                playTone('error');
+                showToast('ขณะนี้อยู่ในช่วงเวลาปิดปรับปรุงระบบ (23:30 น. - 00:00 น.) ไม่สามารถอัปเดตข้อมูลได้', 'error');
+                return;
+            }
+
             const idInput = document.getElementById('edit-saving-id');
             const id = idInput ? idInput.value : '';
             const item = STATE.savings.find(s => s.id === id);
@@ -1801,6 +1890,12 @@
         }
 
         function confirmDeleteSaving(id) {
+            if (isMaintenanceWindow()) {
+                playTone('error');
+                showToast('ขณะนี้อยู่ในช่วงเวลาปิดปรับปรุงระบบ (23:30 น. - 00:00 น.) ไม่สามารถลบข้อมูลได้', 'error');
+                return;
+            }
+
             const item = STATE.savings.find(s => s.id === id);
             if (!item) return;
 
@@ -1901,6 +1996,12 @@
         }
 
         function openNewGoalModal() {
+            if (isMaintenanceWindow()) {
+                playTone('error');
+                showToast('ขณะนี้อยู่ในช่วงเวลาปิดปรับปรุงระบบ (23:30 น. - 00:00 น.) ไม่สามารถสร้างเป้าหมายใหม่ได้', 'error');
+                return;
+            }
+
             const modal = document.getElementById('modal-goal');
             if (modal) modal.classList.remove('hidden');
         }
@@ -1912,6 +2013,13 @@
 
         function handleCreateGoal(e) {
             e.preventDefault();
+
+            if (isMaintenanceWindow()) {
+                playTone('error');
+                showToast('ขณะนี้อยู่ในช่วงเวลาปิดปรับปรุงระบบ (23:30 น. - 00:00 น.) ไม่สามารถบันทึกเป้าหมายได้', 'error');
+                return;
+            }
+
             const elName = document.getElementById('goal-name');
             const elTarget = document.getElementById('goal-target-amount');
             const elStart = document.getElementById('goal-start-date');
@@ -1953,6 +2061,12 @@
         }
 
         function openDepositGoalModal(id) {
+            if (isMaintenanceWindow()) {
+                playTone('error');
+                showToast('ขณะนี้อยู่ในช่วงเวลาปิดปรับปรุงระบบ (23:30 น. - 00:00 น.) ไม่สามารถออมเข้าเป้าหมายได้', 'error');
+                return;
+            }
+
             const goal = STATE.goals.find(g => g.id === id);
             if (!goal) return;
 
@@ -1973,6 +2087,13 @@
 
         function handleDepositGoal(e) {
             e.preventDefault();
+
+            if (isMaintenanceWindow()) {
+                playTone('error');
+                showToast('ขณะนี้อยู่ในช่วงเวลาปิดปรับปรุงระบบ (23:30 น. - 00:00 น.) ไม่สามารถบันทึกรายการได้', 'error');
+                return;
+            }
+
             const elId = document.getElementById('deposit-goal-id');
             const elAmount = document.getElementById('deposit-goal-amount');
 
@@ -2449,9 +2570,9 @@
             if (!container) return;
 
             const toast = document.createElement('div');
-            const bgClass = type === 'success' ? 'bg-emerald-600' : type === 'error' ? 'bg-red-600' : 'bg-slate-800 dark:bg-slate-700';
+            const bgClass = type === 'success' ? 'bg-emerald-600' : type === 'error' ? 'bg-amber-600 dark:bg-amber-700' : 'bg-slate-800 dark:bg-slate-700';
 
-            toast.className = `${bgClass} text-white px-4 py-3 rounded-2xl text-xs font-bold soft-shadow transition-all duration-300 transform translate-y-2 opacity-0 flex items-center space-x-2 pointer-events-auto`;
+            toast.className = `${bgClass} text-white px-4 py-3 rounded-2xl text-xs font-bold soft-shadow transition-all duration-300 transform translate-y-2 opacity-0 flex items-center space-x-2 pointer-events-auto z-50`;
             toast.innerHTML = `<span>${escapeHtml(msg)}</span>`;
 
             container.appendChild(toast);
@@ -2463,10 +2584,9 @@
             setTimeout(() => {
                 toast.classList.add('opacity-0', 'translate-y-2');
                 setTimeout(() => toast.remove(), 300);
-            }, 3000);
+            }, 3500);
         }
 
-        /* System Application Initialization Engine */
         window.onload = function () {
             loadAndMigrateStateFromStorage();
             setupPinAutoUnlock();
