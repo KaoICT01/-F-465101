@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบบันทึกการออมมาตรฐาน (Standard Saving Management System v25.0.0)</title>
+    <title>ระบบบันทึกการออมมาตรฐาน (Standard Saving Management System v27.0.0)</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -176,7 +176,7 @@
     <div class="bg-slate-900 text-white text-xs py-1.5 px-4 lg:px-8 border-b border-slate-800 flex flex-wrap items-center justify-between gap-2 shadow-sm">
         <div class="flex items-center space-x-2">
             <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span class="font-semibold text-slate-300">ระบบบันทึกการออมมาตรฐาน (Standard Saving Management System v25.0.0)</span>
+            <span class="font-semibold text-slate-300">ระบบบันทึกการออมมาตรฐาน (Standard Saving Management System v27.0.0)</span>
             <!-- Maintenance Window Badge -->
             <span id="maintenance-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 hidden animate-pulse">
                 <i class="fa-solid fa-wrench mr-1"></i>ช่วงปิดปรับปรุงระบบ (23:30 - 00:00)
@@ -211,7 +211,7 @@
                     <div class="flex items-center space-x-2">
                         <h1 class="font-bold text-base md:text-lg leading-tight tracking-tight text-slate-900 dark:text-white">ระบบบันทึกการออม</h1>
                     </div>
-                    <span class="text-[10px] text-slate-400 uppercase tracking-widest font-semibold block">Meta Standard v25.0.0</span>
+                    <span class="text-[10px] text-slate-400 uppercase tracking-widest font-semibold block">Meta Standard v27.0.0</span>
                 </div>
             </div>
         </div>
@@ -224,14 +224,18 @@
                 <span id="rank-name-text">...</span>
             </div>
 
-            <!-- Auto Refresh Button & Mode Toggle Header -->
-            <div class="flex items-center bg-slate-100 dark:bg-slate-800/80 rounded-2xl p-1 border border-slate-200/80 dark:border-slate-700/60">
+            <!-- Auto Refresh & Dual Action Refresh Controls Bar -->
+            <div class="flex items-center bg-slate-100 dark:bg-slate-800/80 rounded-2xl p-1 border border-slate-200/80 dark:border-slate-700/60 space-x-0.5">
                 <button id="btn-toggle-autorefresh" class="px-2.5 py-1.5 text-xs font-semibold rounded-xl transition duration-200 flex items-center space-x-1.5 text-slate-600 dark:text-slate-300 hover:text-brand-600" title="เปิด/ปิด การรีเฟรชหน้าจออัตโนมัติ">
                     <span id="auto-refresh-indicator" class="w-2 h-2 rounded-full bg-slate-400"></span>
                     <span id="auto-refresh-status-text" class="hidden md:inline">Auto Sync Off</span>
                 </button>
-                <button id="btn-refresh-data" class="p-1.5 text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-700 rounded-xl transition duration-200" title="รีเฟรชข้อมูลทันที">
+                <div class="h-4 w-[1px] bg-slate-300 dark:bg-slate-700 my-auto"></div>
+                <button id="btn-refresh-data" class="p-1.5 text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-700 rounded-xl transition duration-200" title="รีเฟรชข้อมูล (Re-render Data)">
                     <i id="refresh-icon" class="fa-solid fa-rotate-right text-xs"></i>
+                </button>
+                <button id="btn-reload-page" class="p-1.5 text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-700 rounded-xl transition duration-200" title="รีเฟรชหน้าจอ (F5 / Full Reload)">
+                    <i class="fa-solid fa-arrows-rotate text-xs text-brand-500"></i>
                 </button>
             </div>
 
@@ -924,7 +928,7 @@
                         <div class="pt-4 space-y-2">
                             <div class="font-bold text-sm text-slate-900 dark:text-white" data-i18n="aboutSystem">เกี่ยวกับระบบ</div>
                             <div class="p-4 rounded-2xl bg-slate-100/60 dark:bg-slate-800/40 text-xs space-y-1 text-slate-500 dark:text-slate-400 border border-slate-200/60 dark:border-slate-700/60">
-                                <div><strong class="text-slate-700 dark:text-slate-300">เวอร์ชัน:</strong> Standard Saving System v25.0.0 (Scheduled Performance Optimization Maintenance Engine)</div>
+                                <div><strong class="text-slate-700 dark:text-slate-300">เวอร์ชัน:</strong> Standard Saving System v27.0.0 (Scheduled Performance Optimization Maintenance Engine)</div>
                                 <div><strong class="text-slate-700 dark:text-slate-300">ช่วงเวลาปิดปรับปรุงระบบ:</strong> 23:30 น. - 00:00 น. เพื่อเพิ่มประสิทธิภาพการทำงาน</div>
                                 <div><strong class="text-slate-700 dark:text-slate-300">การรับรองความปลอดภัยข้อมูล:</strong> ระบบย้ายและคุ้มครองข้อมูลอัตโนมัติ (Zero Data Loss Protection)</div>
                                 <div><strong class="text-slate-700 dark:text-slate-300">ลิขสิทธิ์:</strong> © 2026 Meta Saving Architecture Group. All Rights Reserved.</div>
@@ -1084,7 +1088,7 @@
     <div id="toast-container" class="fixed bottom-5 right-5 z-50 space-y-2 pointer-events-none"></div>
 
     <script>
-        /* Modern Vanilla JS Core Engine v25.0.0 */
+        /* Modern Vanilla JS Core Engine v27.0.0 */
 
         // System Application State
         const STATE = {
@@ -1263,6 +1267,7 @@
         function loadAndMigrateStateFromStorage() {
             try {
                 const storageKeys = [
+                    'meta_saving_system_v27',
                     'meta_saving_system_v25',
                     'meta_saving_system_v23',
                     'meta_saving_system_v21',
@@ -1304,6 +1309,7 @@
                     settings: STATE.settings
                 });
                 
+                localStorage.setItem('meta_saving_system_v27', dataString);
                 localStorage.setItem('meta_saving_system_v25', dataString);
                 localStorage.setItem('meta_saving_system_v23', dataString);
             } catch (err) {
@@ -2941,6 +2947,16 @@
                         if (icon) icon.classList.remove('fa-spin');
                         showToast('รีเฟรชข้อมูลเรียบร้อยแล้ว', 'info');
                     }, 400);
+                });
+            }
+
+            const btnReloadPage = document.getElementById('btn-reload-page');
+            if (btnReloadPage) {
+                btnReloadPage.addEventListener('click', () => {
+                    showToast('กำลังโหลดรีเฟรชหน้าจอใหม่...', 'info');
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 300);
                 });
             }
 
